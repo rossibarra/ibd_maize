@@ -1,0 +1,33 @@
+refined-ibd.17Jan20.102.jar
+Copyright (C) 2014-2017 Brian L. Browning
+Enter java -jar refined-ibd.17Jan20.102.jar to list command line argument
+Start time: 10:11 PM PST on 15 Feb 2020
+
+Command line: java -Xmx28000m -jar refined-ibd.17Jan20.102.jar
+  gt=results/LR.allpop.phased.filtered.imputed.8.vcf.gz
+  out=results/LR.allpop.phased.filtered.imputed.8.refined
+  nthreads=8
+  map=data/ogut.map
+  length=0.5
+
+Samples:                 50         
+Model scale:             2.00       
+
+Window 1 (8:79-15280698)
+Markers:                 277,541    
+Model construction:      7 seconds
+IBD detection:           1 second
+Total time:              8 seconds
+
+mean edges/level: 3      max edges/level: 10
+mean edges/node:  1.485  mean count/edge: 33
+
+Cumulative Statistics:
+
+Markers:                 277,541    
+Model construction:      7 seconds
+IBD detection:           1 second
+Total time:              11 seconds
+
+End time: 10:11 PM PST on 15 Feb 2020
+refined-ibd.17Jan20.102.jar finished

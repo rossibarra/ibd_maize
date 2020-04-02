@@ -1,0 +1,19 @@
+beagle.25Nov19.28d.jar (version 5.1)
+Copyright (C) 2014-2018 Brian L. Browning
+Enter "java -jar beagle.25Nov19.28d.jar" to list command line argument
+Start time: 04:08 AM PST on 16 Feb 2020
+
+Command line: java -Xmx28000m -jar beagle.25Nov19.28d.jar
+  gt=/group/jrigrp10/group1/Share/genotypes/282_7X/282.vcf.gz
+  ne=100000
+  chrom=1
+  err=0.001
+  nthreads=20
+  map=data/ogut.map
+  out=results/282.phased.imputed.1
+
+Reference samples:           0
+Study samples:             277
+
+Window 1 (1:10004-18951458)
+Study markers:         875,741

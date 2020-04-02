@@ -1,0 +1,18 @@
+beagle.25Nov19.28d.jar (version 5.1)
+Copyright (C) 2014-2018 Brian L. Browning
+Enter "java -jar beagle.25Nov19.28d.jar" to list command line argument
+Start time: 08:52 PM PST on 15 Feb 2020
+
+Command line: java -Xmx28000m -jar beagle.25Nov19.28d.jar
+  gt=data/LR.allpop.phased.filtered22.6.vcf.gz
+  ne=100000
+  err=0.001
+  nthreads=8
+  map=data/ogut.map
+  out=results/LR.allpop.phased.filtered.imputed.6
+
+Reference samples:           0
+Study samples:              50
+
+Window 1 (6:139-116261905)
+Study markers:       2,168,291

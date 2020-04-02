@@ -1,0 +1,49 @@
+beagle.25Nov19.28d.jar (version 5.1)
+Copyright (C) 2014-2018 Brian L. Browning
+Enter "java -jar beagle.25Nov19.28d.jar" to list command line argument
+Start time: 08:52 PM PST on 15 Feb 2020
+
+Command line: java -Xmx28000m -jar beagle.25Nov19.28d.jar
+  gt=data/LR.allpop.phased.filtered22.1.vcf.gz
+  ne=100000
+  err=0.001
+  nthreads=8
+  map=data/ogut.map
+  out=results/LR.allpop.phased.filtered.imputed.1
+
+Reference samples:           0
+Study samples:              50
+
+Window 1 (1:26291-18982205)
+Study markers:         369,756
+
+Burnin  iteration 1:           25 seconds
+Burnin  iteration 2:           24 seconds
+Burnin  iteration 3:           23 seconds
+Burnin  iteration 4:           23 seconds
+Burnin  iteration 5:           24 seconds
+Burnin  iteration 6:           28 seconds
+
+Phasing iteration 1:           26 seconds
+Phasing iteration 2:           21 seconds
+Phasing iteration 3:           21 seconds
+Phasing iteration 4:           22 seconds
+Phasing iteration 5:           22 seconds
+Phasing iteration 6:           23 seconds
+Phasing iteration 7:           22 seconds
+Phasing iteration 8:           22 seconds
+Phasing iteration 9:           21 seconds
+Phasing iteration 10:          21 seconds
+Phasing iteration 11:          21 seconds
+Phasing iteration 12:          22 seconds
+
+Window 2 (1:15799390-59138067)
+Study markers:         776,747
+
+Burnin  iteration 1:           49 seconds
+Burnin  iteration 2:           49 seconds
+Burnin  iteration 3:           50 seconds
+Burnin  iteration 4:           50 seconds
+Burnin  iteration 5:           51 seconds
+Burnin  iteration 6:           1 minute 4 seconds
+
