@@ -5,7 +5,8 @@
 #SBATCH -e /home/jri/projects/ibd/logs/error-%j.txt
 #SBATCH -t 24:00:00
 #SBATCH -n 8
-#SBATCH --mem 24G 
+#SBATCH --mem 64G 
+#SBATCH -p bigmemh
 
 VCF=data/JRIAL1.vcf
 
