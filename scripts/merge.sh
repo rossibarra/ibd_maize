@@ -8,11 +8,12 @@
 #SBATCH --mem 1G 
 #SBATCH --array 1-10
 
-in=results/LR.allpop.phased.filtered.imputed.$SLURM_ARRAY_TASK_ID.refined.ibd.gz 
+in=results/LJRIAL1.vcf.gz.ibdseq.out.ibd
+#R.allpop.phased.filtered.imputed.$SLURM_ARRAY_TASK_ID.refined.ibd.gz 
 out=results/LR.allpop.phased.filtered.imputed.$SLURM_ARRAY_TASK_ID.merge 
 vcf=results/LR.allpop.phased.filtered.imputed.$SLURM_ARRAY_TASK_ID.vcf.gz 
-gap=0.5 
-discord=2 
+gap=0.6 
+discord=1 
 map=data/ogut.map  
 
 zcat  $in  | java -Xmx8000m  -jar /home/jri/src/ibd/merge-ibd-segments.17Jan20.102.jar $vcf   $map $gap $discord  > $out

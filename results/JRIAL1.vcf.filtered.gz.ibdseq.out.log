@@ -1,0 +1,26 @@
+Program           :  ibdseq r1206  (max memory: 90000 MB)
+Start Time        :  07:13 AM PDT on 06 Apr 2020
+
+Parameters
+  gt              :  /home/jri/projects/ibd/data/JRIAL1.vcf.filtered.gz
+  out             :  /home/jri/projects/ibd/data/JRIAL1.vcf.filtered.gz.ibdseq.out
+  minalleles      :  2
+  ibdlod          :  3.0
+  ibdtrim         :  0.0
+  errormax        :  0.001
+  errorprop       :  0.25
+  r2window        :  500
+  r2max           :  0.15
+  nthreads        :  12
+
+Data Statistics
+  samples         :  55
+  markers         :  6447168
+   >= minalleles  :  4606801
+   LD-thinned     :  239942  (4% of markers)
+  segments/sample :  180.6
+  mean IBD length :  0.76 Mb
+  mean IBD depth  :  0.9
+
+Wallclock Time:   :  17 minutes 36 seconds
+End Time          :  07:31 AM PDT on 06 Apr 2020
