@@ -8,5 +8,6 @@
 #SBATCH --mem 96G 
 #SBATCH -p bigmemh
 
-VCF=/home/jri/projects/ibd/data/JRIAL1.vcf.filtered.gz
+VCF=/home/jri/projects/ibd/data/JRIAL1.vcf.filtered
+
 java -Xmx90000m -jar ~/src/ibd/ibdseq.r1206.jar gt=$VCF out=$VCF.ibdseq.out nthreads=12

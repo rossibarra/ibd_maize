@@ -8,12 +8,12 @@
 #SBATCH --mem 30G 
 
 # run ibdne
-cat  results/LR*merge | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
+cat  results/JRIAL1.vcf.filtered.gz.ibdseq.out.ibd | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
 	map=data/ogut.map \
-	out=results/ne \
+	out=results/JRIAL1_ne \
 	nthreads=20 \
-	mincm=1  \
-	nboots=10 \
+	mincm=0.2 \
+	nboots=0 \
 	filtersamples=false \
 	trimcm=0 \
-	minregion=5
+#	minregion=5

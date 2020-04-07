@@ -8,9 +8,10 @@
 * merge ibd calls (merge.sh)
 * ne estimates (ibdne.sh)
 
-## plan B:
+## plan B: seems to  work quite  badly
+* split vcf  by chromosome
 * ibd with ibdseq on unphased data  (ibdseq.sh)
-* merge ibd calls (merge.sh)
+* merge ibd results
 * ne estimates (ibdne.sh)
 
 ### old plan
