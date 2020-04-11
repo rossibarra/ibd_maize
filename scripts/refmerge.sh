@@ -12,7 +12,7 @@
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
 	date > logs/refmerge.log
-	cat  > scripts/refmerge.sh >> refmerge.log
+	cat  scripts/refmerge.sh >> refmerge.log
 fi
 
 java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
