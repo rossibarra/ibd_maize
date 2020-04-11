@@ -9,6 +9,12 @@
 #SBATCH --array 1-10
 #SBATCH -p  high2
 
+if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
+then
+	date > logs/refmerge.log
+	cat  > scripts/refmerge.sh >> refmerge.log
+fi
+
 java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
 	gt=results/JRIAL1/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed.vcf.gz \
 	out=results/JRIAL1/JRIAL1.filtered.phased.imputed.$SLURM_ARRAY_TASK_ID.refined \
