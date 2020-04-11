@@ -17,4 +17,5 @@ cat results/JRIAL1/*merge | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
 	nboots=100 \
 	filtersamples=true \
 	trimcm=0.1 \
-#	minregion=5
+
+Rscript makeplot.r
