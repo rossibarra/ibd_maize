@@ -6,15 +6,14 @@
 #SBATCH -t24:00:00
 #SBATCH -n 2
 #SBATCH --mem 10G 
-#SBATCH -p bigmemh
+#SBATCH -p high2
+#SBATCH --array 1-10
 
-basename=JRIAL1.vcf.filtered.gz
-in=results/$basename.ibdseq.out.ibd
-#R.allpop.phased.filtered.imputed.$SLURM_ARRAY_TASK_ID.refined.ibd.gz 
-out=results/$basename.merge 
-vcf=data/$basename 
-gap=0.6 
+in=results/JRIAL1/JRIAL1.filtered.phased.imputed.$SLURM_ARRAY_TASK_ID.refined.ibd.gz
+out=$in.merge 
+vcf=results/JRIAL1/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed.vcf.gz 
+gap=0.25 
 discord=1 
 map=data/ogut.map  
 
-cat  $in  | java -Xmx8000m  -jar /home/jri/src/ibd/merge-ibd-segments.17Jan20.102.jar $vcf   $map $gap $discord  > $out
+zcat  $in  | java -Xmx8000m  -jar /home/jri/src/ibd/merge-ibd-segments.17Jan20.102.jar $vcf   $map $gap $discord  > $out
