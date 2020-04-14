@@ -16,9 +16,9 @@ cat results/JRIAL1/*merge | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
 	map=data/ogut.map \
 	out=results/JRIAL1/JRIAL1_ne \
 	nthreads=30 \
-	mincm=0.5 \
+	mincm=0.4 \
 	nboots=100 \
 	filtersamples=true \
-	trimcm=0.05 
+	trimcm=0
 
-Rscript makeplot.r
+Rscript scripts/makeplot.r

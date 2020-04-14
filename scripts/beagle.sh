@@ -12,7 +12,7 @@
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
 	date > logs/beagle.log
-	cat  scripts/beagle.sh >> beagle.log
+	cat  scripts/beagle.sh >> logs/beagle.log
 fi
 
 java -Xmx80000m  -jar /home/jri/src/ibd/beagle.25Nov19.28d.jar \

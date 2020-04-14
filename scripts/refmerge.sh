@@ -12,7 +12,7 @@
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
 	date > logs/refmerge.log
-	cat  scripts/refmerge.sh >> refmerge.log
+	cat  scripts/refmerge.sh >> logs/refmerge.log
 fi
 
 java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
@@ -20,13 +20,13 @@ java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
 	out=results/JRIAL1/JRIAL1.filtered.phased.imputed.$SLURM_ARRAY_TASK_ID.refined \
 	nthreads=16 \
 	map=data/ogut.map  \
-	length=0.25 \
+	length=0.2 \
 	trim=0
 
 in=results/JRIAL1/JRIAL1.filtered.phased.imputed.$SLURM_ARRAY_TASK_ID.refined.ibd.gz
 mout=$in.merge 
 vcf=results/JRIAL1/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed.vcf.gz 
-gap=0.1 
+gap=0.2 
 discord=1 
 map=data/ogut.map  
 
