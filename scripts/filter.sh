@@ -11,24 +11,37 @@
 
 set -e
 
-# keep track of the last executed command
+project=JRIAL1
+
+# error tracking
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-# echo an error message before exiting
 trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' EXIT
 
-
+#project specific log of script
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
-	date > logs/filter.log
-	cat  scripts/filter.sh >> logs/filter.log
+	date > logs/$project/filter.log
+	cat  scripts/filter.sh >> logs/$project/filter.log
 fi
 
-VCF=data/JRIAL1.vcf
+#data file
+VCF=data/$project/$project.vcf
 
+#project specific parameters
+declare -A options
+	options[282]="--minDP 5 --maxDP 50 --maf 0.02"
+ 	options[JRIAL1]="--minDP 15 --maxDP 100 --hwe 0.001 --maf 0.05"
+echo ${options[282]}
+
+#run vcftools
 vcftools --gzvcf $VCF.gz --chr $SLURM_ARRAY_TASK_ID --max-alleles 2 --min-alleles 2  \
-	--remove-indels --minQ 30 --minDP 15 --maxDP 100 \
-	--minGQ 30 --max-missing 0.05 --hwe 0.001 --maf 0.05 \
+	--remove-indels --minQ 30 --minGQ 30 \
+	${options[$project]} \
 	--recode --stdout |  bgzip >  $VCF.$SLURM_ARRAY_TASK_ID.filtered.gz   
 
+#index filtered file
 tabix -p vcf $VCF.$SLURM_ARRAY_TASK_ID.filtered.gz  # index compressed vcf
+
+
+
 

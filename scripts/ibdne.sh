@@ -23,7 +23,7 @@ fi
 # keep track of the last executed command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 # echo an error message before exiting
-trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' EXIT
+trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ERR
 
 cat results/JRIAL1/*merge | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
 	map=data/ogut.map \
