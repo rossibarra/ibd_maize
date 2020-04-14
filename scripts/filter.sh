@@ -12,7 +12,7 @@
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
 	date > logs/filter.log
-	cat  scripts/filter.sh >> filter.log
+	cat  scripts/filter.sh >> logs/filter.log
 fi
 
 VCF=data/JRIAL1.vcf
