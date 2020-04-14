@@ -8,6 +8,16 @@
 #SBATCH --mem-per-cpu 4G  
 #SBATCH --partition=high2
 
+set -e
+
+date > logs/freebayes.log
+echo $SLURM_JOB_ID >> logs/freebayes.log
+cat scripts/freebayes.sh >>  logs/freebayes.log
+
+# keep track of the last executed command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# echo an error message before exiting
+trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' EXIT
 
 begin=`date +%s`
 

@@ -1,34 +1,39 @@
 #!/bin/bash -l
 #SBATCH -D /home/jri/projects/ibd
 #SBATCH -J refmerge
-#SBATCH -o /home/jri/projects/ibd/logs/refmerge.out-%j.txt
-#SBATCH -e /home/jri/projects/ibd/logs/refmerge.error-%j.txt
+#SBATCH -o /home/jri/projects/ibd/logs/refmerge-%A_%a.out
+#SBATCH -e /home/jri/projects/ibd/logs/refmerge-%A_%a.error
 #SBATCH -t24:00:00
 #SBATCH -n 20
 #SBATCH --mem 30G 
-#SBATCH --array 1-10
 #SBATCH -p  high2
+#SBATCH --array 1,3,7,10 
 
-if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
-then
-	date > logs/refmerge.log
-	cat  scripts/refmerge.sh >> logs/refmerge.log
-fi
+set -e
+
+# keep track of the last executed command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# echo an error message before exiting
+trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' EXIT
+
+rm -f rersults/JRIAL1/*merge
+
+in=results/JRIAL1/JRIAL1.vcf.$SLURM_ARRAY_TASK_ID.filtered.phased.imputed
 
 java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
-	gt=results/JRIAL1/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed.vcf.gz \
-	out=results/JRIAL1/JRIAL1.filtered.phased.imputed.$SLURM_ARRAY_TASK_ID.refined \
+	gt=$in.vcf.gz \
+	out=$in.refined \
 	nthreads=16 \
 	map=data/ogut.map  \
-	length=0.2 \
+	length=0.3 \
 	trim=0
 
-in=results/JRIAL1/JRIAL1.filtered.phased.imputed.$SLURM_ARRAY_TASK_ID.refined.ibd.gz
+in_ibd=$in.refined.ibd.gz
 mout=$in.merge 
-vcf=results/JRIAL1/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed.vcf.gz 
-gap=0.2 
+vcf=$in.vcf.gz 
+gap=0.3 
 discord=1 
 map=data/ogut.map  
 
-zcat  $in  | java -Xmx8000m  -jar /home/jri/src/ibd/merge-ibd-segments.17Jan20.102.jar \
+zcat  $in_ibd | java -Xmx8000m  -jar /home/jri/src/ibd/merge-ibd-segments.17Jan20.102.jar \
 	$vcf $map $gap $discord  > $mout
