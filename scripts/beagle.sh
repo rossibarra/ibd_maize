@@ -21,4 +21,4 @@ java -Xmx80000m  -jar /home/jri/src/ibd/beagle.25Nov19.28d.jar \
 	err=0.01 \
 	nthreads=10 \
 	map=data/ogut.map  \
-	out=results/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed
+	out=results/JRIAL1/JRIAL1.filtered.$SLURM_ARRAY_TASK_ID.phased.imputed
