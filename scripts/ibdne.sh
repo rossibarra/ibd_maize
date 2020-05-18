@@ -13,9 +13,12 @@ set -e
 project=$1
 
 # run ibdne
-date > logs/ne.log
-echo $SLURM_JOB_ID >> logs/$project/ne.log
-cat scripts/ibdne.sh >>  logs/$project/ne.log
+if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
+then
+	date > logs/$project/ne.log
+	echo $SLURM_JOB_ID >> logs/$project/ne.log
+	cat  scripts/ibdne.sh >> logs/$project/ne.log
+fi
 
 plot=results/$project/neplot.pdf
 if test -f "$plot"; then
@@ -35,7 +38,7 @@ cat results/$project/*merge | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
 	out=results/$project/"$project"_ne \
 	nthreads=30 \
 	mincm=.05 \
-	gmax=1500 \
+	gmax=1000 \
 	nboots=100 \
 	nits=2000 \
 	filtersamples=true \

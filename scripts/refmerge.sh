@@ -13,6 +13,14 @@ set -e
 
 project=$1
 
+if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
+then
+	date > logs/$project/refmerge.log
+        echo $SLURM_JOB_ID >> logs/$project/refmerge.log
+	cat  scripts/refmerge.sh >> logs/$project/refmerge.log
+fi
+
+
 # keep track of the last executed command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ERR
@@ -35,8 +43,8 @@ java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
 
 mout=$in.merge 
 vcf=$in.vcf.gz 
-gap=.1 
-discord=3 
+gap=.5 
+discord=1 
 map=data/ogut.map  
 if test -f $mout; then
 	rm $mout

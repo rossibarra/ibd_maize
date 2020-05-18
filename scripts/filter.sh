@@ -21,6 +21,7 @@ trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' EX
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
 	date > logs/$project/filter.log
+        echo $SLURM_JOB_ID >> logs/$project/filter.log
 	cat  scripts/filter.sh >> logs/$project/filter.log
 fi
 

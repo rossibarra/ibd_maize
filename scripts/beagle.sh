@@ -9,15 +9,16 @@
 #SBATCH -p bigmemh
 #SBATCH --array 1-3,6-10
 
+set -e
 project=$1
 
 if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
 then
 	date > logs/$project/beagle.log
+        echo $SLURM_JOB_ID >> logs/$project/beagle.log
 	cat  scripts/beagle.sh >> logs/$project/beagle.log
 fi
 
-set -e
 
 # keep track of the last executed command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
