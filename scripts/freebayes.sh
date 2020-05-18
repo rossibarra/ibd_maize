@@ -17,7 +17,7 @@ cat scripts/freebayes.sh >>  logs/freebayes.log
 # keep track of the last executed command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 # echo an error message before exiting
-trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' EXIT
+trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ERR
 
 begin=`date +%s`
 
