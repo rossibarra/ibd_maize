@@ -44,7 +44,7 @@ java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
 mout=$in.merge 
 vcf=$in.vcf.gz 
 gap=.5 
-discord=1 
+discord=2 
 map=data/ogut.map  
 if test -f $mout; then
 	rm $mout

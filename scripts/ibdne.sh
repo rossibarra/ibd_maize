@@ -13,12 +13,9 @@ set -e
 project=$1
 
 # run ibdne
-if [  $SLURM_ARRAY_TASK_ID -eq 1 ]
-then
-	date > logs/$project/ne.log
-	echo $SLURM_JOB_ID >> logs/$project/ne.log
-	cat  scripts/ibdne.sh >> logs/$project/ne.log
-fi
+date > logs/$project/ne.log
+echo $SLURM_JOB_ID >> logs/$project/ne.log
+cat  scripts/ibdne.sh >> logs/$project/ne.log
 
 plot=results/$project/neplot.pdf
 if test -f "$plot"; then

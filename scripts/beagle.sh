@@ -7,7 +7,7 @@
 #SBATCH -n 40
 #SBATCH --mem 320G 
 #SBATCH -p bigmemh
-#SBATCH --array 1-3,6-10
+#SBATCH --array 9-10
 
 set -e
 project=$1
@@ -25,10 +25,20 @@ trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 # echo an error message before exiting
 trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ERR
 
+
+if [[ $project = "JRIAL1" ]]; then
+	data=data/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered.gz
+fi
+
+if [[ $project = "282" ]]; then
+	data=data/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered_nohet.refiltered.gz
+fi
+
 java -Xmx310G -jar /home/jri/src/ibd/beagle.25Nov19.28d.jar \
-	gt=data/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered.gz \
+	gt=$data \
 	ne=100000 \
 	err=0.025 \
 	nthreads=36 \
 	map=data/ogut.map  \
 	out=results/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered.phased.imputed
+

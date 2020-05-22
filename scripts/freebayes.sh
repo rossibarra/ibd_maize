@@ -10,9 +10,9 @@
 
 set -e
 
-date > logs/freebayes.log
-echo $SLURM_JOB_ID >> logs/freebayes.log
-cat scripts/freebayes.sh >>  logs/freebayes.log
+date > logs/JRIAL1/freebayes.log
+echo $SLURM_JOB_ID >> logs/JRIAL1/freebayes.log
+cat scripts/freebayes.sh >>  logs/JRIAL1/freebayes.log
 
 # keep track of the last executed command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
@@ -21,7 +21,7 @@ trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ER
 
 begin=`date +%s`
 
-BAMLIST=data/bam_JRIAL1_AGPv4MtPt/bamlist
+BAMLIST=data/JRIAL1/bamlist
 REGION=10000000
 REF=data/ref/Zea_mays.B73_RefGen_v4.dna.toplevel.fa
 FB=/home/jri/src/freebayes/scripts
