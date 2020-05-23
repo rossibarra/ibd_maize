@@ -10,9 +10,11 @@
 
 set -e
 
-date > logs/JRIAL1/freebayes.log
-echo $SLURM_JOB_ID >> logs/JRIAL1/freebayes.log
-cat scripts/freebayes.sh >>  logs/JRIAL1/freebayes.log
+project=$1
+
+date > logs/$project/freebayes.log
+echo $SLURM_JOB_ID >> logs/$project/freebayes.log
+cat scripts/freebayes.sh >>  logs/$project/freebayes.log
 
 # keep track of the last executed command
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
@@ -21,12 +23,13 @@ trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ER
 
 begin=`date +%s`
 
-BAMLIST=data/JRIAL1/bamlist
+BAMLIST=data/$project/bamlist
 REGION=10000000
-REF=data/ref/Zea_mays.B73_RefGen_v4.dna.toplevel.fa
+REF=data/ref/
+#Zea_mays.B73_RefGen_v4.dna.toplevel.fa
 FB=/home/jri/src/freebayes/scripts
 
-$FB/freebayes-parallel <( $FB/fasta_generate_regions.py $REF.fai $REGION ) 32 -f $REF -L $BAMLIST -T 0.01 -0 > JRIAL1.vcf
+$FB/freebayes-parallel <( $FB/fasta_generate_regions.py $REF.fai $REGION ) 32 -f $REF -L $BAMLIST -T 0.003 -0 > $project.vcf
 
 end=`date +%s`
 elapsed=`expr $end - $begin`

@@ -7,7 +7,7 @@
 #SBATCH -n 40
 #SBATCH --mem 320G 
 #SBATCH -p bigmemh
-#SBATCH --array 9-10
+#SBATCH --array 1-10
 
 set -e
 project=$1

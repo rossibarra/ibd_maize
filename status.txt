@@ -1,0 +1,15 @@
+JRIAL1
+*freebayes
+*filtered
+
+282
+(vcf)
+*filtered
+
+amaranth
+
+
+bean
+(vcf)
+
+

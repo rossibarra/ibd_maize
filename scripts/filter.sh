@@ -12,6 +12,7 @@
 set -e
 
 project=$1
+module load bcftools
 
 # error tracking
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
@@ -30,7 +31,8 @@ VCF=data/$project/$project.vcf
 
 #filter hets from inbreds
 if [[ $project = "282" || $project = "bean" ]]; then         
-	~/src/vcflib/bin/vcffilter -g "! ( GT = 0/1 )" $VCF | gzip > $VCF.$SLURM_ARRAY_TASK_ID.nohet.gz
+	bcftools view $VCF.gz --regions $SLURM_ARRAY_TASK_ID -o $VCF.$SLURM_ARRAY_TASK_ID.gz -O z
+	/home/jri/src/vcflib/bin/vcffilter -g "! ( GT = 0/1 )" $VCF.$SLURM_ARRAY_TASK_ID.gz | gzip > $VCF.$SLURM_ARRAY_TASK_ID.nohet.gz
 	mVCF=$VCF.$SLURM_ARRAY_TASK_ID.nohet
 fi
 
@@ -41,7 +43,7 @@ fi
 
 #project specific parameters
 declare -A options
-	options[282]="--maxDP 20 --maf 0.05 --minDP 3 --minQ 30 --minGQ 30 --max-missing 0.2"
+	options[282]="--maxDP 20 --maf 0.05 --minDP 3 --max-missing 0.2 --minGQ 30 --minQ 30"
  	options[JRIAL1]="--minDP 15 --maxDP 100 --hwe 0.01 --maf 0.05 --minGQ 30 --minQ 30 --max-missing 0.05"
 	option[bean]="--minDP 5 --maxDP 30 --max-missing 0.2 --minQ 30 --minGQ 30 --maf 0.1"
 
