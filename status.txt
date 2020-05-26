@@ -7,9 +7,11 @@ JRIAL1
 *filtered
 
 amaranth
-
+*freebayes
+*filtered
 
 bean
 (vcf)
-
-
+*filtered
+*phased
+<<refmerge>>

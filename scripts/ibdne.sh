@@ -31,7 +31,7 @@ trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ER
 ls -lth results/$project/*merge >> ne.log
 
 cat results/$project/*merge | java -jar ~/src/ibd/ibdne.19Sep19.268.jar \
-	map=data/ogut.map \
+	map=data/bean.map \
 	out=results/$project/"$project"_ne \
 	nthreads=30 \
 	mincm=.05 \

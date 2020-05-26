@@ -2,12 +2,11 @@
 #SBATCH -D /home/jri/projects/ibd
 #SBATCH -J filter
 #SBATCH -o /home/jri/projects/ibd/logs/filter-%A_%a.out
-#SBATCH -e /home/jri/projects/ibd/logs/filter-%A_%a.error
 #SBATCH -t 24:00:00
 #SBATCH -n 10
 #SBATCH --mem 24G 
 #SBATCH -p med2
-#SBATCH --array  1-10
+#SBATCH --array  1-16
 
 set -e
 
@@ -30,14 +29,13 @@ fi
 VCF=data/$project/$project.vcf
 
 #filter hets from inbreds
-if [[ $project = "282" || $project = "bean" ]]; then         
+if [[ "$project" = "282" || "$project" = "bean" ]]; then         
 	bcftools view $VCF.gz --regions $SLURM_ARRAY_TASK_ID -o $VCF.$SLURM_ARRAY_TASK_ID.gz -O z
+	tabix -p vcf $VCF.$SLURM_ARRAY_TASK_ID.gz
 	/home/jri/src/vcflib/bin/vcffilter -g "! ( GT = 0/1 )" $VCF.$SLURM_ARRAY_TASK_ID.gz | gzip > $VCF.$SLURM_ARRAY_TASK_ID.nohet.gz
 	mVCF=$VCF.$SLURM_ARRAY_TASK_ID.nohet
-fi
 
-#don't do it for outbred
-if [[ $project = "JRIAL1" ]]; then
+elif [[ "$project"  =  "JRIAL1" || "$project" = "amaranth" ]]; then
 	mVCF=$VCF
 fi
 
@@ -46,6 +44,7 @@ declare -A options
 	options[282]="--maxDP 20 --maf 0.05 --minDP 3 --max-missing 0.2 --minGQ 30 --minQ 30"
  	options[JRIAL1]="--minDP 15 --maxDP 100 --hwe 0.01 --maf 0.05 --minGQ 30 --minQ 30 --max-missing 0.05"
 	option[bean]="--minDP 5 --maxDP 30 --max-missing 0.2 --minQ 30 --minGQ 30 --maf 0.1"
+	option[amaranth]="--minDP 5 --maxDP 30 --max-missing 0.3 --minQ 30 --minGQ 30 --maf 0.05"
 
 #run vcftools
 vcftools --gzvcf $mVCF.gz --chr $SLURM_ARRAY_TASK_ID --max-alleles 2 --min-alleles 2  \

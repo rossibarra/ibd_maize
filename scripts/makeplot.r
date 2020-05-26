@@ -1,8 +1,8 @@
 library(tidyverse)
 
-datne<-read.table("~/projects/ibd/results/JRIAL1/JRIAL1_ne.ne",header=T) 
+datne<-read.table("~/projects/ibd/results/bean/bean_ne.ne",header=T) 
 
-pdf("/home/jri/projects/ibd/results/JRIAL1/neplot.pdf")
+pdf("/home/jri/projects/ibd/results/bean/neplot.pdf")
 
 filter(datne, GEN>200) %>%
   ggplot(aes(x=GEN)) +
@@ -16,4 +16,4 @@ ggplot(data=datne, aes(x=GEN)) +
   theme_bw()
 dev.off()
 
-#ggsave(list(c(longplot,shortplot)),filename="neplot.pdf",device="pdf",path="~/projects/ibd/results/JRIAL1/")
+#ggsave(list(c(longplot,shortplot)),filename="neplot.pdf",device="pdf",path="~/projects/ibd/results/bean/")

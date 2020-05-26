@@ -24,8 +24,8 @@ trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ER
 begin=`date +%s`
 
 BAMLIST=data/$project/bamlist
-REGION=10000000
-REF=data/ref/
+REGION=2000000
+REF=data/ref/PGA2_1_all.fa
 #Zea_mays.B73_RefGen_v4.dna.toplevel.fa
 FB=/home/jri/src/freebayes/scripts
 

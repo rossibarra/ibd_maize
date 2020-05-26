@@ -7,7 +7,7 @@
 #SBATCH -n 18
 #SBATCH --mem 30G 
 #SBATCH -p  med2
-#SBATCH --array 1-10 
+#SBATCH --array 1-11 
 
 set -e
 
@@ -25,27 +25,34 @@ fi
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'echo "ERROR: \"${last_command}\" command failed with exit code $?" >&2' ERR
 
-in=results/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered.phased.imputed
+if [[ "$project" = "282"  || "$project" = "bean" ]]; then
+	in=results/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered.phased.imputed.vcf.hybrid.poly
+elif [[ "$project" = "JRIAL1" || "$project" = "amaranth" ]]; then
+	in=results/$project/$project.vcf.$SLURM_ARRAY_TASK_ID.filtered.phased.imputed.vcf
+fi	
+
+echo $in > ~/crap.$SLURM_ARRAY_TASK_ID
+
 inibd=$in.refined.ibd.gz
 
 if test -f $inibd; then
         rm $inibd
 fi
 
-java -Xmx28000m  -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
-	gt=$in.vcf.gz \
+java -Xmx28000m -Xss5m -jar /home/jri/src/ibd/refined-ibd.17Jan20.102.jar \
+	gt=$in.gz \
 	out=$in.refined \
 	nthreads=18 \
-	map=data/ogut.map  \
+	map=data/bean.map  \
 	length=0.05 \
 	lod=3 \
 	trim=0.001
 
 mout=$in.merge 
-vcf=$in.vcf.gz 
-gap=.5 
+vcf=$in.gz 
+gap=0.6
 discord=2 
-map=data/ogut.map  
+map=data/bean.map  
 if test -f $mout; then
 	rm $mout
 fi
