@@ -1,23 +1,11 @@
-## call SNPs (freebayes.sh)
-## filter vcf (filter.sh)
+## General Pipeline
 
-## plan A:
-* phase (also beagle??) <-haven't done this step before
-* impute missing data (beagle.sh)
-* refinedibd on phased data (refinedibd.sh)
-* merge ibd calls (merge.sh)
-* ne estimates (ibdne.sh)
+General  pipeline follows from [Browning et al. 2018](https://doi.org/10.1371/journal.pgen.1007385)
 
-## plan B: seems to  work quite  badly
-* split vcf  by chromosome
-* ibd with ibdseq on unphased data  (ibdseq.sh)
-* merge ibd results
-* ne estimates (ibdne.sh)
-
-### old plan
-phased vcfs with eagle2 and hapcut <- didn't do 
-filter with filter script
-impute missing with beagle script
-run refined ibd
-merge ibd blocks
-run ibdne
+* align reads with [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)  (to do)
+* call SNPs w/ [freebayes](https://github.com/ekg/freebayes) 
+* filter  with [vcftools](https://vcftools.github.io/index.html)
+* phase/impute with [Beagle5](https://faculty.washington.edu/browning/beagle/beagle.html)
+* identify  IBD with [refinedIBD](http://faculty.washington.edu/browning/refined-ibd.html)
+* merge IBD segments with [mergeIBD](http://faculty.washington.edu/browning/refined-ibd.html#gaps)
+* estimate  Ne over time with [IBDNe](https://faculty.washington.edu/browning/ibdne.html)
