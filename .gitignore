@@ -1,3 +1,3 @@
-results/*
-data/*
-logs/*
+bean/data/*
+JRIAL1/data/*
+slurmout/*

@@ -1,0 +1,6 @@
+---
+FILTER_PARAMS: --max-alleles 2 --min-alleles 2 --remove-indels --minDP 5 --maxDP 30 --max-missing 0.8 --minQ 30 --minGQ 30 --maf 0.1
+NE_GUESSTIMATE: 100000
+GENOTYPE_ERROR: 0.03
+CHROM: 12
+PROJECT: bean

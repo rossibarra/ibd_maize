@@ -1,0 +1,43 @@
+---
+freebayes:
+  p: high2
+  cpus-per-task: 64
+  time: 14-12
+  name: freebayes
+  mem: 30G
+  o: freebayes-%j
+filter:
+  p: high2
+  cpus-per-task: 10
+  time: 24:00:00
+  job-name: filter
+  mem: 24Gi
+  o: filter-%j
+beagle:
+  p: bigmemh
+  cpus-per-task: 20
+  time: 1-12
+  job-name: beagle
+  mem: 160G
+  o: beagle-%j
+refined:
+  p: high2
+  cpus-per-task: 18
+  time: 24:00:00
+  job-name: refinedIBD
+  mem: 30G
+  o: refined-%j
+merge:
+  p: high2
+  cpus-per-task: 1
+  time: 4:00:00
+  job-name: mergeIBD
+  mem: 8G
+  o: merge-%j
+ibdne:
+  p: high2
+  cpus-per-task: 30
+  time: 2:00:00
+  job-name: ibdNE
+  mem: 48G
+  o: ibdne-%j
