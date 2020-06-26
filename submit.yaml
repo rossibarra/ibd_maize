@@ -4,7 +4,7 @@ freebayes:
   cpus-per-task: 64
   time: 14-12
   job-name: freebayes
-  mem: 60G
+  mem: 128G
   o: freebayes-%j
 filter:
   p: high2
