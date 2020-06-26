@@ -2,7 +2,7 @@ shell.executable("zsh")
 
 rule all:
 	input:
-		freebayes=expand("{project}/data/{project}.vcf", project=config['PROJECT']),
+		freebayes=expand("{project}/data/{project}.vcf.gz", project=config['PROJECT']),
 		filter=expand("{project}/data/{project}.{chr}.filtered.vcf.gz", chr=range(1,config['CHROM']), project=config['PROJECT']),
 		beagle=expand("{project}/data/{project}.{chr}.filtered.phased.imputed.vcf.gz", chr=range(1,config['CHROM']), project=config['PROJECT']),
 		refined=expand("{project}/data/{project}.{chr}.filtered.phased.imputed.refined.ibd.gz", chr=range(1,config['CHROM']), project=config['PROJECT']),
