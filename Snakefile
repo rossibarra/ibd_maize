@@ -1,4 +1,4 @@
-shell.executable("zsh")
+shell.executable("/bin/bash")
 
 rule all:
 	input:

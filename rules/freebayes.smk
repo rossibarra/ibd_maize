@@ -8,4 +8,4 @@ rule freebayes:
 	output:
 		"{project}/data/{project}.vcf.gz"
 	shell:
-		"/home/jri/src/freebayes/scripts/freebayes-parallel <(/home/jri/src/freebayes/scripts/fasta_generate_regions.py {input.ref}.fai {params.REGION} ) 64 -f {input.ref} -L {input.bam} -T {config[THETA]} -0 -F {config[FRAC]} --min-coverage {config[MINCOV]} --limit-coverage {config[MAXCOV]} > {params.PROJ}/{params.PROJ}.vcf && bgzip {params.PROJ}/{params.PROJ}.vcf && tabix -p vcf {params.PROJ}/{params.PROJ}.vcf.gz"
+		"/home/jri/src/freebayes/scripts/freebayes-parallel <(/home/jri/src/freebayes/scripts/fasta_generate_regions.py {input.ref}.fai {params.REGION} ) 64 -f {input.ref} -L {input.bam} -T {config[THETA]} -0 -F {config[FRAC]} --min-coverage {config[MINCOV]} --limit-coverage {config[MAXCOV]} > {params.PROJ}/data/{params.PROJ}.vcf && bgzip {params.PROJ}/data/{params.PROJ}.vcf && tabix -p vcf {params.PROJ}/data/{params.PROJ}.vcf.gz"

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 TAXA=$1
 
