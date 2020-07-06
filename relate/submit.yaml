@@ -1,8 +1,36 @@
 ---
-all:
-  p: high2
-  cpus-per-task: 20
-  time: 1-1
-  job-name: relate
-  mem-per-cpu: 2G
-  o: relate-%j
+vcf:
+ p: high2
+ cpus-per-task: 20
+ time: 4:00:00
+ job-name: vcf
+ mem-per-cpu: 2G
+ o: relate.vcf-%j
+convert:
+ p: high2
+ cpus-per-task: 1
+ time: 4:00:00
+ job-name: convert
+ mem-per-cpu: 2G
+ o: relate.convert-%j
+prepare:
+ p: high2
+ cpus-per-task: 1
+ time: 4:00:00
+ job-name: prepare
+ mem-per-cpu: 2G
+ o: relate.prepare-%j
+relate:
+ p: high2
+ cpus-per-task: 1
+ time: 4:00:00
+ job-name: relate
+ mem-per-cpu: 2G
+ o: relate.relate-%j
+estimateNE:
+ p: high2
+ cpus-per-task: 20
+ time: 4:00:00
+ job-name: estimateNE
+ mem-per-cpu: 2G
+ o: relate.NE-%j

@@ -18,28 +18,36 @@ rule vcf:
 
 rule convert:
 	input: "data/{sample}.{chr}.vcf.gz"
-	output: "data/{sample}.{chr}.sample",
-		"data/{sample}.{chr}.haps"
+	output: "data/{sample}.{chr}.sample", "data/{sample}.{chr}.haps"
 	params: 
 		SAM="{sample}",
 		CHR="{chr}"
 	shell: "~/src/relate_v1.1.2_x86_64_dynamic/bin/RelateFileFormats --mode ConvertFromVcf \
-		--haps {params.SAM}.{params.CHR}.haps --sample {params.SAM}.{params.CHR}.sample -i {input}"
+		--haps data/{params.SAM}.{params.CHR}.haps --sample data/{params.SAM}.{params.CHR}.sample \
+		-i data/{params.SAM}.{params.CHR}"
 
 rule prepare:
 	input: 
 		sample="data/{sample}.{chr}.sample",
-		haps="data/{sample}.{chr}.haps"
-	output: "data/{sample}.{chr}.relate"
+		haps="data/{sample}.{chr}.haps",
+		mask=expand("data/{mask}",mask=config['MASK']),
+		ancestor=expand("data/{ancestor}",ancestor=config['ANCESTOR'])
+	output: 
+		"data/{sample}.{chr}.relate.sample.gz",
+		"data/{sample}.{chr}.relate.haps.gz",
+		"data/{sample}.{chr}.relate.dist.gz"
 	params: 
 		SAM="{sample}",
 		CHR="{chr}"
 	shell: "~/src/relate_v1.1.2_x86_64_dynamic/scripts/PrepareInputFiles/PrepareInputFiles.sh \
-		--haps {input.haps} --sample {input.sample} --ancestor {config[ANCESTOR]}) \
-		-o {params.SAM}.{params.CHR}.relate"
+		--haps {input.haps} --sample {input.sample} --ancestor {input.ancestor} \
+		-o data/{params.SAM}.{params.CHR}.relate --mask {input.mask}"
 
 rule relate:
-	input: "data/{sample}.{chr}.relate"
+	input: 
+		sample="data/{sample}.{chr}.relate.sample.gz",
+		haps="data/{sample}.{chr}.relate.haps.gz",
+		dist="data/{sample}.{chr}.relate.dist.gz"
 	output: "results/{sample}.{chr}.mut","results/{sample}.{chr}.anc" 
 	params: 
 		SAM="{sample}",
@@ -49,7 +57,8 @@ rule relate:
 
 rule estimateNE:
 	input: "results/{sample}.{chr}.mut",
-		"results/{sample}.{chr}.anc"
+		"results/{sample}.{chr}.anc",
+		"data/{sample}.poplabels"
 	output: "results/{sample}.{chr}.coal" 
 	params: 
 		SAM="{sample}",

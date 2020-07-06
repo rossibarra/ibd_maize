@@ -6,4 +6,5 @@ snakemake --rerun-incomplete \
 --configfile "$SAMPLE.config.yaml" \
 --cluster-config "submit.yaml" \
 --jobs 100 \
---cluster "sbatch --memper-cpu {cluster.mem-per-cpu} -J {cluster.job-name} --time {cluster.time} -p {cluster.p} -c {cluster.cpus-per-task} -o slurmout/$SAMPLE.{cluster.o}"
+--latency-wait 20 \
+--cluster "sbatch -J {cluster.job-name} --mem-per-cpu {cluster.mem-per-cpu} --time {cluster.time} -p {cluster.p} -c {cluster.cpus-per-task} -o slurmout/$SAMPLE.{cluster.o}"
