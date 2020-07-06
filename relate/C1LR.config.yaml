@@ -1,0 +1,10 @@
+---
+NE: 5E5
+GENTIME: 1
+ANCESTOR: data/trip.fa.gz
+CHROM: 10
+MU: 1E-7
+GEN: 1
+BINS: 1,5,0.1
+SAMPLE: C1LR
+POPS: C1LR.popfile

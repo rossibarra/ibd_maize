@@ -1,0 +1,59 @@
+shell.executable("/bin/bash")
+
+rule all: 
+	input: expand("results/{sample}.{chr}.coal", chr=range(1,config['CHROM']), sample=config['SAMPLE'])
+#		vcf=expand("data/{sample}.{chr}.vcf.gz", sample=config['SAMPLE'], chr=range(1,config['CHROM'])),
+#		convert=expand("data/{sample}.{chr}.sample", chr=range(1,config['CHROM']), sample=config['SAMPLE'])
+		#	expand("{sample}.{chr}.haps", chr=range(1,config['CHROM']), sample=config['SAMPLE'])
+#		prepare="{sample}.{chr}.relate"
+
+rule vcf: 
+	input: "data/{sample}.vcf.gz"
+	output: "data/{sample}.{chr}.vcf.gz"
+	params: 
+		CHR="{chr}",
+		SAM="{sample}"
+	shell: "module load bio3; bcftools view {input} --regions {pararms.CHR} \
+		--threads 20 -o {params.SAM}.{params.CHR}.vcf"
+
+rule convert:
+	input: "data/{sample}.{chr}.vcf.gz"
+	output: "data/{sample}.{chr}.sample",
+		"data/{sample}.{chr}.haps"
+	params: 
+		SAM="{sample}",
+		CHR="{chr}"
+	shell: "~/src/relate_v1.1.2_x86_64_dynamic/bin/RelateFileFormats --mode ConvertFromVcf \
+		--haps {params.SAM}.{params.CHR}.haps --sample {params.SAM}.{params.CHR}.sample -i {input}"
+
+rule prepare:
+	input: 
+		sample="data/{sample}.{chr}.sample",
+		haps="data/{sample}.{chr}.haps"
+	output: "data/{sample}.{chr}.relate"
+	params: 
+		SAM="{sample}",
+		CHR="{chr}"
+	shell: "~/src/relate_v1.1.2_x86_64_dynamic/scripts/PrepareInputFiles/PrepareInputFiles.sh \
+		--haps {input.haps} --sample {input.sample} --ancestor {config[ANCESTOR]}) \
+		-o {params.SAM}.{params.CHR}.relate"
+
+rule relate:
+	input: "data/{sample}.{chr}.relate"
+	output: "results/{sample}.{chr}.mut","results/{sample}.{chr}.anc" 
+	params: 
+		SAM="{sample}",
+		CHR="{chr}"
+	shell: "~/src/relate_v1.1.2_x86_64_dynamic/bin/Relate --mode All -m {config[MU]} -N {config[NE]} \
+		--haps LR.relate.$i.haps --sample LR.relate.$i.sample --map data/ogut.{params.CHR}.txt -o results/{params.SAM}.{params.CHR}"
+
+rule estimateNE:
+	input: "results/{sample}.{chr}.mut",
+		"results/{sample}.{chr}.anc"
+	output: "results/{sample}.{chr}.coal" 
+	params: 
+		SAM="{sample}",
+                CHR="{chr}"
+	shell: "~/src/relate_v1.1.2_x86_64_dynamic/scripts/EstimatePopulationSize/EstimatePopulationSize.sh \
+		-i {input} -o results/{params.SAM}.{params.CHR} -m {config[MU]} \
+		--poplabels {config[POPS]} --years_per_gen {config[GENTIME]} --threads 20 --bins {config[BINS]}" 

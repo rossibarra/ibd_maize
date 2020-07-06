@@ -21,4 +21,6 @@ Requires estimation of small IBD regions. This means careful genotype filtering 
 * Currently memory and CPU are hard-coded into shell commands within each rule, and are also specified in the file `submit.yaml`. Make sure these match. 
 * Need to run more bootstrap replicates for any final analysis of IBDNe.
 
+#Relate subdirectory
 
+Also trying with [relate](https://myersgroup.github.io/relate/index.html).

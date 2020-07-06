@@ -1,0 +1,8 @@
+---
+all:
+  p: high2
+  cpus-per-task: 20
+  time: 1-1
+  job-name: relate
+  mem-per-cpu: 2G
+  o: relate-%j
