@@ -5,7 +5,7 @@ MINCOV: 15
 MAXCOV: 100
 FRAC: 0.2
 PROJECT: JRIAL1
-CHROM: 10
+CHROM: 11
 GENOTYPE_ERROR: 0.03
 NE_GUESSTIMATE: 500000
 FILTER_PARAMS: --minDP 15 --maxDP 100 --hwe 0.01 --maf 0.01 --minGQ 30 --minQ 30 --max-missing 0.7  --max-alleles 2 --min-alleles 2  --remove-indels

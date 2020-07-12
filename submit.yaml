@@ -14,11 +14,11 @@ filter:
   mem: 24Gi
   o: filter-%j
 beagle:
-  p: bigmemh
+  p: bigmemm
   cpus-per-task: 40
   time: 1-12
   job-name: beagle
-  mem: 360G
+  mem: 320G
   o: beagle-%j
 refined:
   p: high2

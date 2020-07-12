@@ -47,17 +47,19 @@ rule relate:
 	input: 
 		sample="data/{sample}.{chr}.relate.sample.gz",
 		haps="data/{sample}.{chr}.relate.haps.gz",
-		dist="data/{sample}.{chr}.relate.dist.gz"
-	output: "results/{sample}.{chr}.mut","results/{sample}.{chr}.anc" 
+		dist="data/{sample}.{chr}.relate.dist.gz",
+		map="data/ogut.chr{chr}.txt"
+	output: "{sample}.{chr}.mut","{sample}.{chr}.anc" 
 	params: 
 		SAM="{sample}",
 		CHR="{chr}"
-	shell: "~/src/relate_v1.1.2_x86_64_dynamic/bin/Relate --mode All -m {config[MU]} -N {config[NE]} \
-		--haps LR.relate.$i.haps --sample LR.relate.$i.sample --map data/ogut.{params.CHR}.txt -o results/{params.SAM}.{params.CHR}"
+	shell: "set +euo pipefail; ~/src/relate_v1.1.2_x86_64_dynamic/bin/Relate --mode All -m {config[MU]} -N {config[NE]} \
+		--haps {input.haps} --sample {input.sample} --map data/ogut.chr{params.CHR}.txt \
+		-o {params.SAM}.{params.CHR}" 
 
 rule estimateNE:
-	input: "results/{sample}.{chr}.mut",
-		"results/{sample}.{chr}.anc",
+	input: "{sample}.{chr}.mut",
+		"{sample}.{chr}.anc",
 		"data/{sample}.poplabels"
 	output: "results/{sample}.{chr}.coal" 
 	params: 
